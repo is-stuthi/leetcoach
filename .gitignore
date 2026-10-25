@@ -1,0 +1,10 @@
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/leetcoach.db
+backend/uvicorn.log
+*.pyc
+
+frontend/node_modules/
+frontend/dist/
+frontend/vite.log
