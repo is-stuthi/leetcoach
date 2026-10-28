@@ -1,9 +1,9 @@
-databases:
-  - name: leetcoach-db
-    plan: free
-    databaseName: leetcoach
-    user: leetcoach
-
+# No `databases:` block here on purpose -- Render's own free Postgres tier
+# expires and is deleted after 30 days, which is a bad fit for a project
+# meant to stay live. The database instead lives on Neon (neon.tech), which
+# has a genuinely non-expiring free tier; its connection string is set below
+# as a plain secret env var (`sync: false` means Render won't try to manage
+# its value -- you paste it in once on the dashboard).
 services:
   - type: web
     name: leetcoach-api
@@ -14,9 +14,7 @@ services:
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: leetcoach-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_ORIGIN
